@@ -484,14 +484,22 @@ void unirAreasLibres()                                                          
         nodo_izquierdo = areasLibres[i] -> inicio;
         nodo_derecho = areasLibres[i] -> inicio -> siguiente;
 
-        do { // Validamos que sea un punto de unio valido
+        while(1)                                                                       // Ciclo para evaluar los nodos
+        {
             if ((nodo_derecho -> inicio == areasLibres[i] -> tam) || 
                 (((nodo_derecho -> inicio - areasLibres[i] -> tam)%(areasLibres[i] -> tam*2)) == 0))
             {
                 hubo_union = 1;
                 break;                                                                  // Se encontró la coincidecnia
             }
-        } while (nodo_derecho -> siguiente != NULL);                                    // Sigue mientras queden nodos por evaluar;
+
+            if (nodo_derecho -> siguiente == NULL)
+                break;                                                                  // El ciclo se rompe al llegar al final
+            
+            // Desplazamos los nodos para la siguiente evaluación
+            nodo_derecho = nodo_derecho -> siguiente;
+            nodo_izquierdo = nodo_izquierdo -> siguiente;
+        }
 
         // Repetimos la validacion para el ultimo
         if ((nodo_derecho -> inicio == areasLibres[i] -> tam) || 
